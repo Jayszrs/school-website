@@ -5,24 +5,18 @@ require_once __DIR__ . '/../../../backend/auth.php';
 
 portal_require_guest();
 
-$portalRoles = [
-    'admin' => ['label' => 'Admin', 'description' => 'Kelola seluruh portal, pengguna, konten, dan data SPMB.'],
-    'humas' => ['label' => 'Humas', 'description' => 'Publikasikan berita dan dokumentasi kegiatan sekolah.'],
-    'kasir' => ['label' => 'Kasir SPMB', 'description' => 'Kelola dan pantau pembayaran pendaftaran siswa baru.'],
-];
-$roleInfo = $portalRoles[$loginRole];
 $error = '';
-$email = '';
+$username = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     portal_verify_csrf();
-    $email = trim($_POST['email'] ?? '');
+    $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
-    if (portal_attempt_login($pdo, $email, $password, $loginRole)) {
-        header('Location: ' . portal_home_for_role($loginRole));
+    if (portal_attempt_login($pdo, $username, $password)) {
+        header('Location: ' . portal_home_for_role(portal_user()['role']));
         exit;
     }
-    $error = 'Email, kata sandi, atau portal role tidak sesuai.';
+    $error = 'Username atau kata sandi tidak sesuai.';
 }
 ?>
 <!DOCTYPE html>
@@ -31,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Login <?php echo esc($roleInfo['label']); ?> | Portal TBZ</title>
+    <title>Login Portal Internal | TBZ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=El+Messiri:wght@600;700&display=swap" rel="stylesheet">
@@ -55,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h1>Kelola Sekolah<br><span>Lebih Terpadu</span></h1>
                 <p>Konten informasi dan administrasi SPMB dalam satu sistem yang aman, ringkas, dan terintegrasi.</p>
                 <div class="visual-role-card">
-                    <span><?php echo esc($roleInfo['label']); ?></span>
-                    <small><?php echo esc($roleInfo['description']); ?></small>
+                    <span>Admin &bull; Humas &bull; Kasir SPMB</span>
+                    <small>Satu pintu masuk, akses menu otomatis sesuai role akun.</small>
                 </div>
             </div>
             <small class="portal-copyright">&copy; 2026 LPIT Thariq Bin Ziyad. Portal administrasi internal.</small>
@@ -67,9 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button class="theme-switch" type="button" id="themeSwitch" aria-label="Ganti mode warna">&#9789;&nbsp; Mode Gelap</button>
         <div class="login-box">
             <span class="mobile-brand">PortalTBZ</span>
-            <span class="role-badge"><?php echo esc($roleInfo['label']); ?></span>
+            <span class="role-badge">Portal Internal</span>
             <h2>Hai, selamat datang! <span aria-hidden="true">&#128075;</span></h2>
-            <p class="login-subtitle">Masuk menggunakan akun <?php echo esc(strtolower($roleInfo['label'])); ?> Anda.</p>
+            <p class="login-subtitle">Masuk menggunakan username akun Anda.</p>
 
             <?php if ($error): ?>
                 <div class="portal-alert danger"><?php echo esc($error); ?></div>
@@ -78,10 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form method="post" autocomplete="on">
                 <input type="hidden" name="_token" value="<?php echo esc(portal_csrf_token()); ?>">
                 <div class="portal-field">
-                    <label for="email">EMAIL</label>
+                    <label for="username">USERNAME</label>
                     <div class="input-wrap">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
-                        <input id="email" name="email" type="email" value="<?php echo esc($email); ?>" placeholder="nama@tbz.sch.id" autocomplete="username" required autofocus>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3-7 8-7s8 3 8 7"/></svg>
+                        <input id="username" name="username" type="text" value="<?php echo esc($username); ?>" placeholder="Masukkan username" autocomplete="username" required autofocus>
                     </div>
                 </div>
                 <div class="portal-field">
@@ -122,4 +116,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </script>
 </body>
 </html>
-

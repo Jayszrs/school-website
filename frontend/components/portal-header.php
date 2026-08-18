@@ -4,7 +4,13 @@ $portalTitle = $portalTitle ?? 'Dashboard';
 $portalActive = $portalActive ?? 'dashboard';
 $portalNav = [
     ['key' => 'dashboard', 'label' => 'Dashboard', 'url' => '/portal/dashboard', 'roles' => ['admin', 'humas', 'kasir']],
-    ['key' => 'content', 'label' => 'Konten Website', 'url' => '/portal/content', 'roles' => ['admin', 'humas']],
+    ['key' => 'content', 'label' => 'Berita & Galeri', 'url' => '/portal/content', 'roles' => ['admin', 'humas']],
+    ['key' => 'site-unit', 'label' => 'Unit Sekolah', 'url' => '/portal/site-content?type=unit', 'roles' => ['admin', 'humas']],
+    ['key' => 'site-achievement', 'label' => 'Prestasi', 'url' => '/portal/site-content?type=achievement', 'roles' => ['admin', 'humas']],
+    ['key' => 'site-leadership', 'label' => 'Struktur Pimpinan', 'url' => '/portal/site-content?type=leadership', 'roles' => ['admin', 'humas']],
+    ['key' => 'site-program', 'label' => 'Program Unggulan', 'url' => '/portal/site-content?type=program', 'roles' => ['admin', 'humas']],
+    ['key' => 'site-activity', 'label' => 'Kegiatan Sekolah', 'url' => '/portal/site-content?type=activity', 'roles' => ['admin', 'humas']],
+    ['key' => 'site-profile', 'label' => 'Profil, Visi & Misi', 'url' => '/portal/site-content?type=profile', 'roles' => ['admin', 'humas']],
     ['key' => 'payments', 'label' => 'Pembayaran SPMB', 'url' => '/portal/payments', 'roles' => ['admin', 'kasir']],
     ['key' => 'users', 'label' => 'Manajemen Pengguna', 'url' => '/portal/users', 'roles' => ['admin']],
 ];
@@ -54,4 +60,3 @@ $portalNav = [
             <?php if ($flash = portal_get_flash()): ?>
                 <div class="portal-alert <?php echo $flash['type'] === 'success' ? 'success' : 'danger'; ?>"><?php echo esc($flash['message']); ?></div>
             <?php endif; ?>
-

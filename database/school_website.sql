@@ -48,12 +48,22 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 -- ============================================================
 CREATE TABLE IF NOT EXISTS `spmb_registrations` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `registration_number` VARCHAR(40) DEFAULT NULL,
     `student_name` VARCHAR(150) NOT NULL,
+    `student_nik` VARCHAR(30) DEFAULT NULL,
+    `gender` ENUM('L','P') DEFAULT NULL,
+    `birth_place` VARCHAR(100) DEFAULT NULL,
+    `birth_date` DATE DEFAULT NULL,
     `parent_name` VARCHAR(150) NOT NULL,
+    `parent_nik` VARCHAR(30) DEFAULT NULL,
+    `family_card_number` VARCHAR(30) DEFAULT NULL,
     `whatsapp` VARCHAR(30) NOT NULL,
     `email` VARCHAR(150) DEFAULT NULL,
     `level` VARCHAR(20) NOT NULL,
     `previous_school` VARCHAR(150) DEFAULT NULL,
+    `address` TEXT DEFAULT NULL,
+    `registration_status` ENUM('baru','verifikasi','lulus','cadangan','ditolak','daftar_ulang') NOT NULL DEFAULT 'baru',
+    `document_status` ENUM('belum_lengkap','lengkap','terverifikasi') NOT NULL DEFAULT 'belum_lengkap',
     `payment_status` ENUM('belum_bayar','sebagian','lunas') NOT NULL DEFAULT 'belum_bayar',
     `payment_amount` DECIMAL(14,2) NOT NULL DEFAULT 0,
     `payment_method` VARCHAR(50) DEFAULT NULL,
@@ -68,13 +78,15 @@ CREATE TABLE IF NOT EXISTS `spmb_registrations` (
 CREATE TABLE IF NOT EXISTS `portal_users` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(120) NOT NULL,
-    `email` VARCHAR(190) NOT NULL UNIQUE,
+    `username` VARCHAR(80) NOT NULL,
+    `email` VARCHAR(190) DEFAULT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
     `role` ENUM('admin','humas','kasir') NOT NULL,
     `is_active` TINYINT(1) NOT NULL DEFAULT 1,
     `last_login_at` DATETIME DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY `uq_portal_username` (`username`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `portal_activity_logs` (
@@ -86,6 +98,75 @@ CREATE TABLE IF NOT EXISTS `portal_activity_logs` (
     INDEX `idx_activity_user` (`user_id`),
     CONSTRAINT `fk_activity_user` FOREIGN KEY (`user_id`) REFERENCES `portal_users` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `site_content_items` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `type` VARCHAR(30) NOT NULL,
+    `title` VARCHAR(180) NOT NULL,
+    `subtitle` VARCHAR(180) DEFAULT NULL,
+    `description` TEXT NOT NULL,
+    `image` VARCHAR(255) DEFAULT NULL,
+    `badge` VARCHAR(80) DEFAULT NULL,
+    `year` VARCHAR(10) DEFAULT NULL,
+    `extra` TEXT DEFAULT NULL,
+    `sort_order` INT NOT NULL DEFAULT 0,
+    `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX `idx_content_type` (`type`,`is_active`,`sort_order`)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `site_profile` (
+    `id` TINYINT PRIMARY KEY,
+    `history_title` VARCHAR(180) NOT NULL,
+    `history_content` TEXT NOT NULL,
+    `vision` TEXT NOT NULL,
+    `mission` TEXT NOT NULL,
+    `image` VARCHAR(255) DEFAULT NULL,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `spmb_payments` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `registration_id` INT NOT NULL,
+    `receipt_number` VARCHAR(50) NOT NULL UNIQUE,
+    `payment_type` VARCHAR(50) NOT NULL,
+    `amount` DECIMAL(14,2) NOT NULL,
+    `payment_method` VARCHAR(50) NOT NULL,
+    `payment_date` DATE NOT NULL,
+    `reference_number` VARCHAR(100) DEFAULT NULL,
+    `payer_name` VARCHAR(150) DEFAULT NULL,
+    `notes` TEXT DEFAULT NULL,
+    `status` ENUM('verified','cancelled') NOT NULL DEFAULT 'verified',
+    `recorded_by` INT DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_payment_registration` (`registration_id`),
+    CONSTRAINT `fk_payment_registration` FOREIGN KEY (`registration_id`) REFERENCES `spmb_registrations` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_payment_recorder` FOREIGN KEY (`recorded_by`) REFERENCES `portal_users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- Konten awal CMS agar halaman publik langsung terisi setelah import.
+INSERT INTO `site_profile` (`id`,`history_title`,`history_content`,`vision`,`mission`) VALUES
+(1, 'Perjalanan LPIT Thariq Bin Ziyad', 'Didirikan dengan semangat mencetak generasi Qurani yang cerdas dan berakhlak mulia, LPIT Thariq Bin Ziyad berkembang menjadi lembaga pendidikan Islam terpadu terpercaya. Selama lebih dari dua dekade, kami konsisten memadukan kurikulum nasional, pendidikan Al-Quran, dan pembentukan karakter.', 'Menjadi lembaga pendidikan Islam terpadu terdepan yang melahirkan generasi cerdas, berakhlak mulia, dan berdaya saing global.', 'Menyelenggarakan pendidikan berbasis Al-Quran dan Sunnah, mengembangkan potensi akademik secara optimal, serta membangun karakter dan kepemimpinan sejak dini.');
+
+INSERT INTO `site_content_items` (`type`,`title`,`subtitle`,`description`,`badge`,`year`,`extra`,`sort_order`) VALUES
+('unit','SD Islam Terpadu','SD','Jenjang pendidikan dasar yang menanamkan fondasi akademik, keimanan, dan akhlak sejak usia dini.',NULL,NULL,'Tahfidz Juz 30\nCalistung\nEkstrakurikuler\nFull Day School',1),
+('unit','SMP Islam Terpadu','SMP','Menguatkan kompetensi akademik dan kepemimpinan siswa melalui kurikulum terintegrasi.',NULL,NULL,'Tahfidz Juz Pilihan\nEnglish Club\nKlub Sains\nKepemimpinan',2),
+('unit','SMA Islam Terpadu','SMA','Mempersiapkan siswa menghadapi perguruan tinggi dengan penguatan akademik dan karakter Islami.',NULL,NULL,'Bimbingan PTN\nPeminatan IPA/IPS\nLeadership Camp\nKarya Ilmiah',3),
+('achievement','Juara 1 Olimpiade Matematika','Tingkat Nasional','Prestasi siswa dalam Olimpiade Matematika.','Nasional','2026',NULL,1),
+('achievement','Juara 2 MTQ Pelajar','Tingkat Provinsi','Prestasi siswa dalam Musabaqah Tilawatil Quran.','Provinsi','2025',NULL,2),
+('achievement','Juara 1 Lomba Sains','Tingkat Kota','Prestasi siswa dalam kompetisi sains.','Kota','2025',NULL,3),
+('leadership','Nama Kepala Sekolah','Kepala Sekolah','Memimpin arah pendidikan dan pengembangan mutu sekolah.',NULL,NULL,NULL,1),
+('leadership','Nama Wakil Kepala Sekolah','Wakil Kepala Bidang Kurikulum','Mengelola dan mengembangkan kurikulum akademik sekolah.',NULL,NULL,NULL,2),
+('leadership','Nama Wakil Kepala Sekolah','Wakil Kepala Bidang Kesiswaan','Membina kegiatan dan pengembangan karakter siswa.',NULL,NULL,NULL,3),
+('program','Tahfidz Al-Quran','Q','Program hafalan Al-Quran dengan target setiap jenjang.',NULL,NULL,NULL,1),
+('program','English Program','E','Penguatan kemampuan bahasa Inggris aktif melalui kelas percakapan.',NULL,NULL,NULL,2),
+('program','Character Building','C','Pembinaan akhlak dan karakter Islami dalam keseharian.',NULL,NULL,NULL,3),
+('program','Digital Learning','D','Pemanfaatan teknologi dalam proses pembelajaran.',NULL,NULL,NULL,4),
+('program','Leadership Program','L','Melatih kepemimpinan melalui organisasi dan proyek kolaboratif.',NULL,NULL,NULL,5),
+('activity','Pesantren Ramadhan',NULL,'Kegiatan keagamaan selama bulan Ramadhan.',NULL,NULL,NULL,1),
+('activity','Field Trip',NULL,'Kunjungan edukatif untuk memperluas wawasan siswa.',NULL,NULL,NULL,2),
+('activity','Wisuda Tahfidz',NULL,'Prosesi kelulusan siswa yang menyelesaikan target hafalan.',NULL,NULL,NULL,3);
 
 -- ============================================================
 -- SAMPLE DATA: news

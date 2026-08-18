@@ -2,16 +2,8 @@
 require_once __DIR__ . '/../../backend/config/database.php';
 require_once __DIR__ . '/../../backend/helpers/functions.php';
 $page_title = 'Prestasi';
+$achievements = $pdo->query("SELECT * FROM site_content_items WHERE type='achievement' AND is_active=1 ORDER BY sort_order,id")->fetchAll();
 require_once __DIR__ . '/../components/header.php';
-
-$achievements = [
-    ['title' => 'Juara 1 Olimpiade Matematika', 'level' => 'Tingkat Nasional', 'year' => '2026', 'tag' => 'Nasional', 'color' => 'd4af37'],
-    ['title' => 'Juara 2 MTQ Pelajar', 'level' => 'Tingkat Provinsi', 'year' => '2025', 'tag' => 'Provinsi', 'color' => '0f5132'],
-    ['title' => 'Juara 1 Lomba Sains', 'level' => 'Tingkat Kota', 'year' => '2025', 'tag' => 'Kota', 'color' => 'd4af37'],
-    ['title' => 'Juara 1 Lomba Pidato Bahasa Inggris', 'level' => 'Tingkat Kota', 'year' => '2025', 'tag' => 'Kota', 'color' => '0f5132'],
-    ['title' => 'Juara 3 Olimpiade Sains Nasional', 'level' => 'Tingkat Nasional', 'year' => '2024', 'tag' => 'Nasional', 'color' => 'd4af37'],
-    ['title' => 'Juara 1 Futsal Antar Sekolah', 'level' => 'Tingkat Kota', 'year' => '2024', 'tag' => 'Kota', 'color' => '0f5132'],
-];
 ?>
 
 <section class="page-header">
@@ -30,11 +22,12 @@ $achievements = [
         <div class="grid-3">
             <?php foreach ($achievements as $a): ?>
             <div class="card achieve-card">
-                <span class="achieve-tag"><?php echo esc($a['tag']); ?></span>
-                <img src="https://placehold.co/500x375/<?php echo $a['color']; ?>/ffffff?text=<?php echo urlencode($a['title']); ?>" alt="<?php echo esc($a['title']); ?>" loading="lazy">
+                <span class="achieve-tag"><?php echo esc($a['badge'] ?: 'Prestasi'); ?></span>
+                <img src="<?php echo esc($a['image'] ?: 'https://placehold.co/500x375/0f5132/ffffff?text='.urlencode($a['title'])); ?>" alt="<?php echo esc($a['title']); ?>" loading="lazy">
                 <div class="card-body">
                     <h3><?php echo esc($a['title']); ?></h3>
-                    <div class="achieve-meta"><span><?php echo esc($a['level']); ?></span><span><?php echo esc($a['year']); ?></span></div>
+                    <p><?php echo esc($a['description']); ?></p>
+                    <div class="achieve-meta"><span><?php echo esc($a['subtitle']); ?></span><span><?php echo esc($a['year']); ?></span></div>
                 </div>
             </div>
             <?php endforeach; ?>

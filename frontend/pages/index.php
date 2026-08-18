@@ -10,6 +10,11 @@ $latest_news = $stmt->fetchAll();
 // Ambil 6 foto galeri
 $stmt = $pdo->query("SELECT * FROM gallery ORDER BY created_at DESC LIMIT 6");
 $gallery_photos = $stmt->fetchAll();
+$home_units = $pdo->query("SELECT * FROM site_content_items WHERE type='unit' AND is_active=1 ORDER BY sort_order,id LIMIT 3")->fetchAll();
+$home_programs = $pdo->query("SELECT * FROM site_content_items WHERE type='program' AND is_active=1 ORDER BY sort_order,id LIMIT 5")->fetchAll();
+$home_achievements = $pdo->query("SELECT * FROM site_content_items WHERE type='achievement' AND is_active=1 ORDER BY sort_order,id LIMIT 3")->fetchAll();
+$home_profile = $pdo->query('SELECT * FROM site_profile WHERE id=1')->fetch();
+$home_activities = $pdo->query("SELECT * FROM site_content_items WHERE type='activity' AND is_active=1 ORDER BY sort_order,id LIMIT 4")->fetchAll();
 
 require_once __DIR__ . '/../components/header.php';
 ?>
@@ -39,12 +44,11 @@ require_once __DIR__ . '/../components/header.php';
 <!-- TENTANG SEKOLAH -->
 <section class="section">
     <div class="container about-grid">
-        <img src="https://placehold.co/700x525/0f5132/ffffff?text=Tentang+Sekolah" alt="Tentang Sekolah">
+        <img src="<?php echo esc($home_profile['image'] ?: 'https://placehold.co/700x525/0f5132/ffffff?text=Tentang+Sekolah'); ?>" alt="Tentang Sekolah">
         <div class="about-text">
             <span class="section-eyebrow">Tentang Kami</span>
-            <h2>Mendidik dengan Hati, Membimbing dengan Ilmu</h2>
-            <p><?php echo esc(SITE_NAME); ?> hadir sebagai lembaga pendidikan Islam terpadu yang mengintegrasikan kurikulum nasional, pendidikan Al-Qur'an, serta pengembangan karakter dalam satu sistem pembelajaran yang komprehensif.</p>
-            <p>Dengan dukungan tenaga pendidik profesional dan fasilitas modern, kami berkomitmen menghadirkan lingkungan belajar yang nyaman, aman, dan menyenangkan bagi setiap siswa.</p>
+            <h2><?php echo esc($home_profile['history_title']); ?></h2>
+            <p><?php echo esc(mb_strimwidth($home_profile['history_content'],0,390,'...')); ?></p>
             <a href="tentang.php" class="btn btn-primary">Selengkapnya</a>
         </div>
     </div>
@@ -59,30 +63,7 @@ require_once __DIR__ . '/../components/header.php';
             <p>Menyediakan jenjang pendidikan berkelanjutan dari usia dini hingga menengah atas.</p>
         </div>
         <div class="grid-3">
-            <div class="card">
-                <img src="https://placehold.co/500x375/0f5132/ffffff?text=SD" alt="SD Islam Terpadu">
-                <div class="card-body">
-                    <h3>SD Islam Terpadu</h3>
-                    <p>Membangun fondasi akademik dan akhlak sejak dini melalui pembelajaran tematik yang menyenangkan.</p>
-                    <a href="unit.php#sd" class="btn btn-outline btn-sm">Lihat Detail</a>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://placehold.co/500x375/0f5132/ffffff?text=SMP" alt="SMP Islam Terpadu">
-                <div class="card-body">
-                    <h3>SMP Islam Terpadu</h3>
-                    <p>Mengembangkan potensi akademik dan kepemimpinan siswa dengan kurikulum terintegrasi.</p>
-                    <a href="unit.php#smp" class="btn btn-outline btn-sm">Lihat Detail</a>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://placehold.co/500x375/0f5132/ffffff?text=SMA" alt="SMA Islam Terpadu">
-                <div class="card-body">
-                    <h3>SMA Islam Terpadu</h3>
-                    <p>Mempersiapkan siswa menuju jenjang perguruan tinggi dengan bekal akademik dan karakter kuat.</p>
-                    <a href="unit.php#sma" class="btn btn-outline btn-sm">Lihat Detail</a>
-                </div>
-            </div>
+            <?php foreach($home_units as $unit): ?><div class="card"><img src="<?php echo esc($unit['image'] ?: 'https://placehold.co/500x375/0f5132/ffffff?text='.urlencode($unit['subtitle'] ?: $unit['title'])); ?>" alt="<?php echo esc($unit['title']); ?>"><div class="card-body"><h3><?php echo esc($unit['title']); ?></h3><p><?php echo esc(mb_strimwidth($unit['description'],0,145,'...')); ?></p><a href="unit.php#<?php echo esc(strtolower($unit['subtitle'] ?: 'unit-'.$unit['id'])); ?>" class="btn btn-outline btn-sm">Lihat Detail</a></div></div><?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -96,31 +77,7 @@ require_once __DIR__ . '/../components/header.php';
             <p>Rangkaian program yang dirancang untuk mengembangkan potensi siswa secara menyeluruh.</p>
         </div>
         <div class="grid-4">
-            <div class="program-card">
-                <div class="program-icon">Q</div>
-                <h3>Tahfidz Al-Qur'an</h3>
-                <p>Program hafalan Al-Qur'an terstruktur sesuai target jenjang.</p>
-            </div>
-            <div class="program-card">
-                <div class="program-icon">E</div>
-                <h3>English Program</h3>
-                <p>Penguatan kemampuan bahasa Inggris aktif sejak dini.</p>
-            </div>
-            <div class="program-card">
-                <div class="program-icon">C</div>
-                <h3>Character Building</h3>
-                <p>Pembentukan akhlak dan karakter Islami dalam keseharian.</p>
-            </div>
-            <div class="program-card">
-                <div class="program-icon">D</div>
-                <h3>Digital Learning</h3>
-                <p>Pembelajaran berbasis teknologi untuk kesiapan era digital.</p>
-            </div>
-            <div class="program-card">
-                <div class="program-icon">L</div>
-                <h3>Leadership Program</h3>
-                <p>Melatih jiwa kepemimpinan melalui organisasi dan proyek siswa.</p>
-            </div>
+            <?php foreach($home_programs as $program): ?><div class="program-card"><div class="program-icon"><?php echo esc($program['subtitle'] ?: mb_substr($program['title'],0,1)); ?></div><h3><?php echo esc($program['title']); ?></h3><p><?php echo esc(mb_strimwidth($program['description'],0,125,'...')); ?></p></div><?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -162,30 +119,7 @@ require_once __DIR__ . '/../components/header.php';
             <p>Sebagian pencapaian siswa-siswi kami di berbagai ajang kompetisi.</p>
         </div>
         <div class="grid-3">
-            <div class="card achieve-card">
-                <span class="achieve-tag">Nasional</span>
-                <img src="https://placehold.co/500x375/d4af37/1f2937?text=Olimpiade+Matematika" alt="Juara Olimpiade Matematika">
-                <div class="card-body">
-                    <h3>Juara 1 Olimpiade Matematika</h3>
-                    <div class="achieve-meta"><span>Tingkat Nasional</span><span>2026</span></div>
-                </div>
-            </div>
-            <div class="card achieve-card">
-                <span class="achieve-tag">Provinsi</span>
-                <img src="https://placehold.co/500x375/d4af37/1f2937?text=MTQ" alt="Juara MTQ">
-                <div class="card-body">
-                    <h3>Juara 2 MTQ Pelajar</h3>
-                    <div class="achieve-meta"><span>Tingkat Provinsi</span><span>2025</span></div>
-                </div>
-            </div>
-            <div class="card achieve-card">
-                <span class="achieve-tag">Kota</span>
-                <img src="https://placehold.co/500x375/d4af37/1f2937?text=Sains" alt="Juara Sains">
-                <div class="card-body">
-                    <h3>Juara 1 Lomba Sains</h3>
-                    <div class="achieve-meta"><span>Tingkat Kota</span><span>2025</span></div>
-                </div>
-            </div>
+            <?php foreach($home_achievements as $achievement): ?><div class="card achieve-card"><span class="achieve-tag"><?php echo esc($achievement['badge'] ?: 'Prestasi'); ?></span><img src="<?php echo esc($achievement['image'] ?: 'https://placehold.co/500x375/d4af37/1f2937?text='.urlencode($achievement['title'])); ?>" alt="<?php echo esc($achievement['title']); ?>"><div class="card-body"><h3><?php echo esc($achievement['title']); ?></h3><div class="achieve-meta"><span><?php echo esc($achievement['subtitle']); ?></span><span><?php echo esc($achievement['year']); ?></span></div></div></div><?php endforeach; ?>
         </div>
         <div style="text-align:center; margin-top:36px;">
             <a href="prestasi.php" class="btn btn-outline">Lihat Semua Prestasi</a>
@@ -201,22 +135,7 @@ require_once __DIR__ . '/../components/header.php';
             <h2>Kegiatan Sekolah Terbaru</h2>
         </div>
         <div class="grid-4">
-            <div class="card">
-                <img src="https://placehold.co/400x300/0f5132/ffffff?text=Pesantren+Ramadhan" alt="Pesantren Ramadhan">
-                <div class="card-body"><h3>Pesantren Ramadhan</h3></div>
-            </div>
-            <div class="card">
-                <img src="https://placehold.co/400x300/0f5132/ffffff?text=Field+Trip" alt="Field Trip">
-                <div class="card-body"><h3>Field Trip</h3></div>
-            </div>
-            <div class="card">
-                <img src="https://placehold.co/400x300/0f5132/ffffff?text=Wisuda+Tahfidz" alt="Wisuda Tahfidz">
-                <div class="card-body"><h3>Wisuda Tahfidz</h3></div>
-            </div>
-            <div class="card">
-                <img src="https://placehold.co/400x300/0f5132/ffffff?text=Class+Meeting" alt="Class Meeting">
-                <div class="card-body"><h3>Class Meeting</h3></div>
-            </div>
+            <?php foreach($home_activities as $activity): ?><div class="card"><img src="<?php echo esc($activity['image'] ?: 'https://placehold.co/400x300/0f5132/ffffff?text='.urlencode($activity['title'])); ?>" alt="<?php echo esc($activity['title']); ?>"><div class="card-body"><h3><?php echo esc($activity['title']); ?></h3><p><?php echo esc(mb_strimwidth($activity['description'],0,100,'...')); ?></p></div></div><?php endforeach; ?>
         </div>
         <div style="text-align:center; margin-top:36px;">
             <a href="kegiatan.php" class="btn btn-outline">Lihat Semua Kegiatan</a>

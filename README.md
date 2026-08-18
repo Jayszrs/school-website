@@ -24,11 +24,17 @@ http://localhost/school-website/
 
 ## Portal Internal (CRM)
 
-Portal tidak ditampilkan pada navigasi website publik. Gunakan URL role berikut:
+Portal tidak ditampilkan pada navigasi website publik. Semua role masuk melalui satu URL:
 
-- Admin: `http://localhost/school-website/portal/admin`
-- Humas: `http://localhost/school-website/portal/humas`
-- Kasir SPMB: `http://localhost/school-website/portal/kasir`
+`http://localhost/school-website/portal/admin`
+
+Login menggunakan username (tanpa email). Menu di dashboard otomatis disesuaikan dengan role Admin, Humas, atau Kasir SPMB.
+
+Akun awal:
+
+- `admin` / `AdminTBZ#2026`
+- `humas` / `HumasTBZ#2026`
+- `kasir` / `KasirTBZ#2026`
 
 Akun awal dibuat otomatis ketika salah satu halaman portal pertama kali dibuka. Admin dapat mengganti password, menambah akun, atau menonaktifkan akun melalui menu **Manajemen Pengguna**.
 

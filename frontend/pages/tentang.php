@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../../backend/config/database.php';
 require_once __DIR__ . '/../../backend/helpers/functions.php';
 $page_title = 'Tentang Kami';
+$profile = $pdo->query('SELECT * FROM site_profile WHERE id=1')->fetch();
+$leaders = $pdo->query("SELECT * FROM site_content_items WHERE type='leadership' AND is_active=1 ORDER BY sort_order,id")->fetchAll();
 require_once __DIR__ . '/../components/header.php';
 ?>
 
@@ -14,12 +16,11 @@ require_once __DIR__ . '/../components/header.php';
 
 <section class="section">
     <div class="container about-grid">
-        <img src="https://placehold.co/700x525/0f5132/ffffff?text=Sejarah+Sekolah" alt="Sejarah Sekolah">
+        <img src="<?php echo esc($profile['image'] ?: 'https://placehold.co/700x525/0f5132/ffffff?text=Sejarah+Sekolah'); ?>" alt="Sejarah Sekolah">
         <div class="about-text">
             <span class="section-eyebrow">Sejarah Kami</span>
-            <h2>Perjalanan <?php echo esc(SITE_NAME); ?></h2>
-            <p>Didirikan dengan semangat mencetak generasi Qurani yang cerdas dan berakhlak mulia, <?php echo esc(SITE_NAME); ?> telah berkembang menjadi salah satu lembaga pendidikan Islam terpadu terpercaya di wilayahnya.</p>
-            <p>Selama lebih dari dua dekade, kami konsisten menghadirkan sistem pendidikan yang memadukan kurikulum nasional, pendidikan Al-Qur'an, serta pembentukan karakter dalam satu ekosistem belajar yang menyeluruh.</p>
+            <h2><?php echo esc($profile['history_title']); ?></h2>
+            <p><?php echo nl2br(esc($profile['history_content'])); ?></p>
         </div>
     </div>
 </section>
@@ -29,13 +30,13 @@ require_once __DIR__ . '/../components/header.php';
         <div class="card">
             <div class="card-body">
                 <h3>Visi</h3>
-                <p>Menjadi lembaga pendidikan Islam terpadu terdepan yang melahirkan generasi cerdas, berakhlak mulia, dan berdaya saing global.</p>
+                <p><?php echo nl2br(esc($profile['vision'])); ?></p>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
                 <h3>Misi</h3>
-                <p>Menyelenggarakan pendidikan berbasis Al-Qur'an dan Sunnah, mengembangkan potensi akademik siswa secara optimal, serta membangun karakter dan kepemimpinan sejak dini.</p>
+                <p><?php echo nl2br(esc($profile['mission'])); ?></p>
             </div>
         </div>
     </div>
@@ -49,27 +50,7 @@ require_once __DIR__ . '/../components/header.php';
             <p>Dipimpin oleh tenaga pendidik profesional dan berpengalaman.</p>
         </div>
         <div class="grid-3">
-            <div class="card">
-                <img src="https://placehold.co/400x400/0f5132/ffffff?text=Kepala+Sekolah" alt="Kepala Sekolah">
-                <div class="card-body">
-                    <h3>Kepala Sekolah</h3>
-                    <p>Memimpin arah pendidikan dan pengembangan mutu sekolah secara keseluruhan.</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://placehold.co/400x400/0f5132/ffffff?text=Wakil+Kurikulum" alt="Wakil Kepala Sekolah Bidang Kurikulum">
-                <div class="card-body">
-                    <h3>Wakil Kepala Bidang Kurikulum</h3>
-                    <p>Mengelola dan mengembangkan kurikulum akademik sekolah.</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://placehold.co/400x400/0f5132/ffffff?text=Wakil+Kesiswaan" alt="Wakil Kepala Sekolah Bidang Kesiswaan">
-                <div class="card-body">
-                    <h3>Wakil Kepala Bidang Kesiswaan</h3>
-                    <p>Membina kegiatan dan pengembangan karakter siswa.</p>
-                </div>
-            </div>
+            <?php foreach($leaders as $leader): ?><div class="card"><img src="<?php echo esc($leader['image'] ?: 'https://placehold.co/400x400/0f5132/ffffff?text='.urlencode($leader['subtitle'])); ?>" alt="<?php echo esc($leader['title']); ?>"><div class="card-body"><span class="section-eyebrow"><?php echo esc($leader['subtitle']); ?></span><h3><?php echo esc($leader['title']); ?></h3><p><?php echo nl2br(esc($leader['description'])); ?></p></div></div><?php endforeach; ?>
         </div>
     </div>
 </section>

@@ -76,7 +76,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Dashboard shell */
 .portal-layout { min-height: 100vh; display: grid; grid-template-columns: 260px 1fr; }
-.portal-sidebar { position: fixed; inset: 0 auto 0 0; width: 260px; padding: 26px 18px; background: var(--portal-green-dark); color: #fff; display: flex; flex-direction: column; z-index: 20; }
+.portal-sidebar { position: fixed; inset: 0 auto 0 0; width: 260px; padding: 26px 18px; background: var(--portal-green-dark); color: #fff; display: flex; flex-direction: column; z-index: 20; overflow-y: auto; }
 .sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 0 10px 27px; font-weight: 900; }
 .sidebar-brand img { width: 39px; height: 39px; object-fit: cover; object-position: left center; background: #fff; border: 3px solid #fff; border-radius: 10px; }
 .sidebar-role { margin: 0 8px 22px; padding: 12px; border-radius: 12px; background: rgba(255,255,255,.08); }
@@ -149,6 +149,9 @@ a { color: inherit; text-decoration: none; }
 .filters input, .filters select { border: 1px solid var(--portal-border); background: var(--portal-surface); color: var(--portal-text); border-radius: 9px; padding: 9px 11px; }
 .empty-state { color: var(--portal-muted); text-align: center; padding: 35px 15px; }
 .amount { font-variant-numeric: tabular-nums; font-weight: 700; }
+.content-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 13px; margin-bottom: 22px; }
+.content-tabs a { flex: none; padding: 9px 13px; border: 1px solid var(--portal-border); border-radius: 999px; background: var(--portal-surface); color: var(--portal-muted); font-size: .74rem; font-weight: 750; }
+.content-tabs a:hover, .content-tabs a.active { color: #fff; background: var(--portal-green); border-color: var(--portal-green); }
 
 @media (max-width: 980px) {
     .login-shell { grid-template-columns: 45% 55%; }

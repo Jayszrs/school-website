@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../backend/config/database.php';
 require_once __DIR__ . '/../../backend/helpers/functions.php';
 $page_title = 'SPMB - Penerimaan Murid Baru';
+$spmbUnits = $pdo->query("SELECT * FROM site_content_items WHERE type='unit' AND is_active=1 ORDER BY sort_order,id")->fetchAll();
 require_once __DIR__ . '/../components/header.php';
 ?>
 
@@ -38,9 +39,7 @@ require_once __DIR__ . '/../components/header.php';
             <h2>Jenjang Pendaftaran</h2>
         </div>
         <div class="grid-3">
-            <div class="card"><div class="card-body"><h3>SD Islam Terpadu</h3><p>Usia minimal 6 tahun per Juli tahun ajaran baru.</p></div></div>
-            <div class="card"><div class="card-body"><h3>SMP Islam Terpadu</h3><p>Lulusan SD/sederajat dengan ijazah dan rapor lengkap.</p></div></div>
-            <div class="card"><div class="card-body"><h3>SMA Islam Terpadu</h3><p>Lulusan SMP/sederajat dengan ijazah dan rapor lengkap.</p></div></div>
+            <?php foreach($spmbUnits as $unit): ?><div class="card"><?php if($unit['image']): ?><img src="<?php echo esc($unit['image']); ?>" alt="<?php echo esc($unit['title']); ?>"><?php endif; ?><div class="card-body"><h3><?php echo esc($unit['title']); ?></h3><p><?php echo esc(mb_strimwidth($unit['description'],0,150,'...')); ?></p><a class="btn btn-outline btn-sm" href="form-spmb.php?level=<?php echo urlencode($unit['subtitle']); ?>">Pilih Jenjang</a></div></div><?php endforeach; ?>
         </div>
     </div>
 </section>

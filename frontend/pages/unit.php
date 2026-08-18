@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../backend/config/database.php';
 require_once __DIR__ . '/../../backend/helpers/functions.php';
 $page_title = 'Unit Sekolah';
+$units = $pdo->query("SELECT * FROM site_content_items WHERE type='unit' AND is_active=1 ORDER BY sort_order,id")->fetchAll();
 require_once __DIR__ . '/../components/header.php';
 ?>
 
@@ -15,35 +16,14 @@ require_once __DIR__ . '/../components/header.php';
 <section class="section">
     <div class="container">
 
-        <div class="unit-block" id="sd">
-            <div class="unit-media"><img src="https://placehold.co/700x525/0f5132/ffffff?text=SD+Islam+Terpadu" alt="SD Islam Terpadu"></div>
-            <div class="unit-text">
-                <h2>SD Islam Terpadu</h2>
-                <p>Jenjang pendidikan dasar yang menanamkan fondasi akademik, keimanan, dan akhlak sejak usia dini melalui pembelajaran tematik yang aktif dan menyenangkan.</p>
-                <div class="unit-tags"><span>Tahfidz Juz 30</span><span>Calistung</span><span>Ekstrakurikuler</span><span>Full Day School</span></div>
-                <a href="spmb.php" class="btn btn-primary">Daftar di Unit Ini</a>
-            </div>
+        <?php foreach ($units as $index=>$unit): ?>
+        <div class="unit-block <?php echo $index % 2 ? 'reverse' : ''; ?>" id="<?php echo esc(strtolower($unit['subtitle'] ?: 'unit-'.$unit['id'])); ?>">
+            <div class="unit-media"><img src="<?php echo esc($unit['image'] ?: 'https://placehold.co/700x525/0f5132/ffffff?text='.urlencode($unit['title'])); ?>" alt="<?php echo esc($unit['title']); ?>"></div>
+            <div class="unit-text"><span class="section-eyebrow"><?php echo esc($unit['subtitle'] ?: 'Unit Pendidikan'); ?></span><h2><?php echo esc($unit['title']); ?></h2><p><?php echo nl2br(esc($unit['description'])); ?></p>
+            <?php $tags=array_filter(array_map('trim',preg_split('/\r\n|\r|\n/',(string)$unit['extra']))); if($tags): ?><div class="unit-tags"><?php foreach($tags as $tag): ?><span><?php echo esc($tag); ?></span><?php endforeach; ?></div><?php endif; ?>
+            <a href="form-spmb.php?level=<?php echo urlencode($unit['subtitle']); ?>" class="btn btn-primary">Daftar di Unit Ini</a></div>
         </div>
-
-        <div class="unit-block reverse" id="smp">
-            <div class="unit-media"><img src="https://placehold.co/700x525/0f5132/ffffff?text=SMP+Islam+Terpadu" alt="SMP Islam Terpadu"></div>
-            <div class="unit-text">
-                <h2>SMP Islam Terpadu</h2>
-                <p>Menguatkan kompetensi akademik dan kepemimpinan siswa melalui kurikulum terintegrasi, program tahfidz lanjutan, dan pembinaan organisasi siswa.</p>
-                <div class="unit-tags"><span>Tahfidz Juz Pilihan</span><span>English Club</span><span>Klub Sains</span><span>Kepemimpinan</span></div>
-                <a href="spmb.php" class="btn btn-primary">Daftar di Unit Ini</a>
-            </div>
-        </div>
-
-        <div class="unit-block" id="sma">
-            <div class="unit-media"><img src="https://placehold.co/700x525/0f5132/ffffff?text=SMA+Islam+Terpadu" alt="SMA Islam Terpadu"></div>
-            <div class="unit-text">
-                <h2>SMA Islam Terpadu</h2>
-                <p>Mempersiapkan siswa menghadapi jenjang perguruan tinggi dan dunia kerja dengan penguatan akademik, minat bakat, dan pembinaan karakter Islami yang matang.</p>
-                <div class="unit-tags"><span>Bimbingan PTN</span><span>Peminatan IPA/IPS</span><span>Leadership Camp</span><span>Karya Ilmiah</span></div>
-                <a href="spmb.php" class="btn btn-primary">Daftar di Unit Ini</a>
-            </div>
-        </div>
+        <?php endforeach; ?>
 
     </div>
 </section>

@@ -2,16 +2,8 @@
 require_once __DIR__ . '/../../backend/config/database.php';
 require_once __DIR__ . '/../../backend/helpers/functions.php';
 $page_title = 'Kegiatan Sekolah';
+$activities = $pdo->query("SELECT * FROM site_content_items WHERE type='activity' AND is_active=1 ORDER BY sort_order,id")->fetchAll();
 require_once __DIR__ . '/../components/header.php';
-
-$activities = [
-    ['title' => 'Pesantren Ramadhan', 'desc' => 'Rangkaian kegiatan keagamaan selama bulan Ramadhan untuk seluruh siswa.'],
-    ['title' => 'Field Trip', 'desc' => 'Kunjungan edukatif ke berbagai tempat untuk memperluas wawasan siswa.'],
-    ['title' => 'Wisuda Tahfidz', 'desc' => 'Prosesi kelulusan siswa yang telah menyelesaikan target hafalan Al-Qur\'an.'],
-    ['title' => 'Class Meeting', 'desc' => 'Ajang kompetisi antar kelas setelah pelaksanaan ujian semester.'],
-    ['title' => 'Manasik Haji', 'desc' => 'Simulasi praktik ibadah haji sebagai bagian dari pendidikan agama.'],
-    ['title' => 'Lomba Kreativitas Ramadhan', 'desc' => 'Kompetisi kreativitas siswa bertema Islami menyambut bulan suci.'],
-];
 ?>
 
 <section class="page-header">
@@ -30,10 +22,11 @@ $activities = [
         <div class="grid-3">
             <?php foreach ($activities as $a): ?>
             <div class="card">
-                <img src="https://placehold.co/500x375/0f5132/ffffff?text=<?php echo urlencode($a['title']); ?>" alt="<?php echo esc($a['title']); ?>" loading="lazy">
+                <img src="<?php echo esc($a['image'] ?: 'https://placehold.co/500x375/0f5132/ffffff?text='.urlencode($a['title'])); ?>" alt="<?php echo esc($a['title']); ?>" loading="lazy">
                 <div class="card-body">
+                    <?php if($a['subtitle']): ?><div class="news-date"><?php echo esc($a['subtitle']); ?></div><?php endif; ?>
                     <h3><?php echo esc($a['title']); ?></h3>
-                    <p><?php echo esc($a['desc']); ?></p>
+                    <p><?php echo nl2br(esc($a['description'])); ?></p>
                 </div>
             </div>
             <?php endforeach; ?>

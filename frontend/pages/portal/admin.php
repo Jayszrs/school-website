@@ -1,4 +1,1 @@
-<?php
-$loginRole = 'admin';
-require __DIR__ . '/_login.php';
-
+<?php require __DIR__ . '/_login.php';

@@ -2,15 +2,8 @@
 require_once __DIR__ . '/../../backend/config/database.php';
 require_once __DIR__ . '/../../backend/helpers/functions.php';
 $page_title = 'Program Unggulan';
+$programs = $pdo->query("SELECT * FROM site_content_items WHERE type='program' AND is_active=1 ORDER BY sort_order,id")->fetchAll();
 require_once __DIR__ . '/../components/header.php';
-
-$programs = [
-    ['icon' => 'Q', 'title' => "Tahfidz Al-Qur'an", 'desc' => "Program hafalan Al-Qur'an dengan target dan metode yang disesuaikan setiap jenjang, dibimbing oleh guru tahfidz bersertifikat."],
-    ['icon' => 'E', 'title' => 'English Program', 'desc' => 'Penguatan kemampuan berbahasa Inggris aktif melalui kelas percakapan, English day, dan klub bahasa.'],
-    ['icon' => 'C', 'title' => 'Character Building', 'desc' => 'Pembinaan akhlak dan karakter Islami yang terintegrasi dalam kegiatan belajar sehari-hari.'],
-    ['icon' => 'D', 'title' => 'Digital Learning', 'desc' => 'Pemanfaatan teknologi dalam proses pembelajaran untuk mempersiapkan siswa menghadapi era digital.'],
-    ['icon' => 'L', 'title' => 'Leadership Program', 'desc' => 'Melatih jiwa kepemimpinan siswa melalui organisasi, proyek kolaboratif, dan kegiatan sosial.'],
-];
 ?>
 
 <section class="page-header">
@@ -30,10 +23,11 @@ $programs = [
         <div class="grid-3">
             <?php foreach ($programs as $p): ?>
             <div class="card">
+                <?php if($p['image']): ?><img src="<?php echo esc($p['image']); ?>" alt="<?php echo esc($p['title']); ?>" loading="lazy"><?php endif; ?>
                 <div class="card-body">
-                    <div class="program-icon" style="margin-bottom:16px;"><?php echo esc($p['icon']); ?></div>
+                    <div class="program-icon" style="margin-bottom:16px;"><?php echo esc($p['subtitle'] ?: mb_substr($p['title'],0,1)); ?></div>
                     <h3><?php echo esc($p['title']); ?></h3>
-                    <p><?php echo esc($p['desc']); ?></p>
+                    <p><?php echo nl2br(esc($p['description'])); ?></p>
                 </div>
             </div>
             <?php endforeach; ?>

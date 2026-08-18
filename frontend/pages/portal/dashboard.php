@@ -47,7 +47,9 @@ require __DIR__ . '/../../components/portal-header.php';
         <div class="panel-head"><h3>Akses Cepat</h3></div>
         <div class="quick-links">
             <?php if (in_array($user['role'], ['admin', 'humas'], true)): ?>
-                <a class="quick-link" href="<?php echo SITE_URL; ?>/portal/content"><strong>Kelola Konten</strong><small>Tambah berita dan galeri sekolah.</small></a>
+                <a class="quick-link" href="<?php echo SITE_URL; ?>/portal/content"><strong>Berita &amp; Galeri</strong><small>Publikasi informasi dan dokumentasi sekolah.</small></a>
+                <a class="quick-link" href="<?php echo SITE_URL; ?>/portal/site-content?type=unit"><strong>Unit, Program &amp; Prestasi</strong><small>Kelola gambar SD/SMP/SMA dan konten pendidikan.</small></a>
+                <a class="quick-link" href="<?php echo SITE_URL; ?>/portal/site-content?type=leadership"><strong>Profil &amp; Pimpinan</strong><small>Perbarui sejarah, visi misi, foto, nama, dan jabatan.</small></a>
             <?php endif; ?>
             <?php if (in_array($user['role'], ['admin', 'kasir'], true)): ?>
                 <a class="quick-link" href="<?php echo SITE_URL; ?>/portal/payments"><strong>Pembayaran SPMB</strong><small>Cek dan ubah status pembayaran.</small></a>
@@ -59,4 +61,3 @@ require __DIR__ . '/../../components/portal-header.php';
     </aside>
 </div>
 <?php require __DIR__ . '/../../components/portal-footer.php'; ?>
-
