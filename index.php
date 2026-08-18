@@ -16,23 +16,24 @@ require_once 'includes/header.php';
 <!-- HERO -->
 <section class="hero">
     <div class="container hero-inner">
-        <div class="hero-content">
-            <span class="hero-eyebrow">Sekolah Islam Terpadu</span>
-            <h1>Membangun Generasi <span>Islami</span>, Cerdas, dan Berkarakter</h1>
-            <p>Kami memadukan kurikulum akademik berkualitas dengan pendidikan Al-Qur'an dan pembentukan akhlak untuk mempersiapkan putra-putri Anda menghadapi masa depan.</p>
-            <div class="hero-actions">
-                <a href="tentang.php" class="btn btn-outline">Tentang Kami</a>
-                <a href="spmb.php" class="btn btn-primary">Daftar SPMB</a>
-            </div>
-        </div>
-        <div class="hero-media">
-            <img src="https://placehold.co/700x525/0f5132/ffffff?text=Foto+Sekolah" alt="Foto <?php echo esc(SITE_NAME); ?>">
-            <div class="hero-badge">
-                <div><strong>20+</strong><span>Tahun Pengalaman</span></div>
-            </div>
+        <span class="hero-eyebrow">Penerimaan Siswa Baru Tahun Ajaran 2026/2027</span>
+        <h1>Lembaga Pendidikan <span>Islam Terpadu</span> Thariq Bin Ziyad</h1>
+        <p>Membentuk generasi Qur'ani, cerdas, dan berkarakter dengan paduan kurikulum akademik modern dan nilai-nilai keislaman untuk menghadapi masa depan.</p>
+        <div class="hero-actions">
+            <a href="tentang.php" class="btn btn-outline-light">Tentang Kami</a>
+            <a href="spmb.php" class="btn btn-primary">Daftar SPMB</a>
         </div>
     </div>
 </section>
+
+<!-- RUNNING TEXT -->
+<div style="background: var(--primary-dark); color: #fff; padding: 10px 0; overflow: hidden; white-space: nowrap;">
+    <div class="container">
+        <marquee behavior="scroll" direction="left" scrollamount="6" style="font-size: 0.9rem; font-weight: 600;">
+            • Selamat datang di website resmi LPIT Thariq Bin Ziyad • Pendaftaran Murid Baru Tahun Ajaran 2026/2027 Telah Dibuka! • Membentuk Generasi Qur'ani, Akademik, Bahasa, Menuju Trendsetter Sekolah Islam Unggulan •
+        </marquee>
+    </div>
+</div>
 
 <!-- TENTANG SEKOLAH -->
 <section class="section">
