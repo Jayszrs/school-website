@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Login Portal Internal | TBZ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=El+Messiri:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/frontend/assets/css/portal.css">
 </head>
 <body class="login-page">
@@ -40,17 +40,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <span class="portal-brand-logo"><img src="<?php echo SITE_URL; ?>/frontend/assets/images/logo.png" alt="Logo TBZ"></span>
                 <span>PortalTBZ</span>
             </div>
-            <span class="version-pill">Internal</span>
+            <span class="version-pill">Sistem Internal</span>
             <div class="visual-copy">
                 <span class="shield-mark" aria-hidden="true">
                     <svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.6 2.9 8.3 7 10 4.1-1.7 7-5.4 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
                 </span>
-                <p class="visual-kicker">Portal Internal Sekolah</p>
-                <h1>Kelola Sekolah<br><span>Lebih Terpadu</span></h1>
-                <p>Konten informasi dan administrasi SPMB dalam satu sistem yang aman, ringkas, dan terintegrasi.</p>
+                <p class="visual-kicker">Sistem Informasi Terpadu</p>
+                <h1>Administrasi Sekolah<br><span>Lebih Terarah</span></h1>
+                <p>Kelola publikasi sekolah dan administrasi SPMB melalui satu ruang kerja yang aman, efisien, dan terintegrasi.</p>
                 <div class="visual-role-card">
-                    <span>Admin &bull; Humas &bull; Kasir SPMB</span>
-                    <small>Satu pintu masuk, akses menu otomatis sesuai role akun.</small>
+                    <span>Akses berbasis peran</span>
+                    <small>Admin, Humas, dan Kasir SPMB memperoleh menu sesuai tanggung jawab masing-masing.</small>
                 </div>
             </div>
             <small class="portal-copyright">&copy; 2026 LPIT Thariq Bin Ziyad. Portal administrasi internal.</small>
@@ -58,12 +58,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </section>
 
     <section class="login-form-side">
-        <button class="theme-switch" type="button" id="themeSwitch" aria-label="Ganti mode warna">&#9789;&nbsp; Mode Gelap</button>
         <div class="login-box">
             <span class="mobile-brand">PortalTBZ</span>
-            <span class="role-badge">Portal Internal</span>
-            <h2>Hai, selamat datang! <span aria-hidden="true">&#128075;</span></h2>
-            <p class="login-subtitle">Masuk menggunakan username akun Anda.</p>
+            <div class="login-heading-mark"></div>
+            <span class="role-badge">Akses Petugas</span>
+            <h2>Selamat datang</h2>
+            <p class="login-subtitle">Silakan masuk menggunakan akun portal sekolah Anda.</p>
 
             <?php if ($error): ?>
                 <div class="portal-alert danger"><?php echo esc($error); ?></div>
@@ -88,27 +88,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </button>
                     </div>
                 </div>
-                <label class="remember"><input type="checkbox" name="remember"> <span>Ingat perangkat ini</span></label>
                 <button class="login-submit" type="submit">Masuk <span>&rarr;</span></button>
             </form>
-            <p class="login-help">Kesulitan masuk? Hubungi Administrator sekolah.</p>
+            <p class="login-help">Akun portal dikelola oleh Administrator LPIT Thariq Bin Ziyad.</p>
         </div>
     </section>
   </main>
   <script>
-    const root = document.documentElement;
-    const themeSwitch = document.getElementById('themeSwitch');
-    const savedTheme = localStorage.getItem('tbz-theme');
-    if (savedTheme === 'dark') root.dataset.theme = 'dark';
-    function syncThemeLabel() {
-      themeSwitch.innerHTML = root.dataset.theme === 'dark' ? '&#9728;&nbsp; Mode Terang' : '&#9789;&nbsp; Mode Gelap';
-    }
-    syncThemeLabel();
-    themeSwitch.addEventListener('click', function () {
-      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('tbz-theme', root.dataset.theme);
-      syncThemeLabel();
-    });
     document.getElementById('passwordToggle').addEventListener('click', function () {
       const input = document.getElementById('password');
       input.type = input.type === 'password' ? 'text' : 'password';
