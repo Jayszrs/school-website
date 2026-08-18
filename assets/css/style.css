@@ -45,8 +45,8 @@ ul { list-style: none; }
 
 h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; color: var(--primary-dark); }
 
-.section { padding: 80px 0; }
-.section-alt { background: var(--surface); }
+.section { padding: 80px 0; background-image: url('../images/ornament.svg'); background-size: 150px; background-attachment: fixed; }
+.section-alt { background-color: var(--surface); background-image: url('../images/ornament.svg'); background-size: 150px; background-attachment: fixed; }
 
 .section-head { text-align: center; max-width: 640px; margin: 0 auto 48px; }
 .section-eyebrow {
@@ -105,12 +105,12 @@ h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; color: var(--primary-dark)
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 14px;
-    padding-bottom: 14px;
+    padding: 14px 5%;
+    width: 100%;
 }
 .brand { display: flex; align-items: center; gap: 10px; }
-.brand-logo { height: 120px; width: auto; object-fit: contain; }
-.brand-logo-footer { height: 90px; width: auto; filter: brightness(0) invert(1); }
+.brand-logo { height: 75px; width: auto; object-fit: contain; }
+.brand-logo-footer { height: 65px; width: auto; filter: brightness(0) invert(1); }
 .brand-name { font-weight: 800; font-size: 1.15rem; color: var(--primary-dark); display: none; }
 
 .main-nav { display: flex; align-items: center; gap: 26px; }
@@ -501,9 +501,29 @@ table.schedule th { background: var(--primary); color: #fff; }
         display: none;
     }
     .main-nav.open { display: flex; }
-    .main-nav ul { flex-direction: column; gap: 4px; }
-    .main-nav ul li a { display: block; padding: 12px 6px; border-bottom: 1px solid var(--border); }
-    .nav-cta { text-align: center; }
+    .main-nav ul { flex-direction: column; gap: 4px; align-items: stretch; }
+    .main-nav a { display: flex; padding: 12px 20px; border-bottom: 1px solid var(--border); justify-content: space-between; }
+    .nav-cta { text-align: center; margin: 10px 20px; }
+
+    /* Mobile Dropdown Fixes */
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        border: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+        padding: 0 0 0 20px !important;
+        background: rgba(0,0,0,0.02);
+    }
+    .has-dropdown.dropdown-open .dropdown-menu {
+        display: flex;
+    }
+    .has-dropdown:hover .dropdown-menu {
+        transform: none;
+    }
+    .header-inner { padding: 14px 20px; }
 
     .grid-3, .grid-2, .steps-grid, .gallery-grid, .why-grid { grid-template-columns: 1fr; }
     .grid-4 { grid-template-columns: 1fr 1fr; }

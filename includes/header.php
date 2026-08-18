@@ -13,7 +13,7 @@
 <body>
 
 <header class="site-header" id="siteHeader">
-    <div class="container header-inner">
+    <div class="header-inner">
         <a href="<?php echo SITE_URL; ?>/index.php" class="brand">
             <img src="<?php echo SITE_URL; ?>/assets/images/logo.png" alt="Logo <?php echo esc(SITE_NAME); ?>" class="brand-logo" onerror="this.style.display='none'">
         </a>

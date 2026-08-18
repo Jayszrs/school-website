@@ -282,3 +282,14 @@ require_once 'includes/header.php';
 </section>
 
 <?php require_once 'includes/footer.php'; ?>
+
+<!-- Script Parallax Hero -->
+<script>
+document.addEventListener("scroll", function() {
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        let scrollPos = window.pageYOffset;
+        hero.style.backgroundPositionY = (scrollPos * 0.4) + "px";
+    }
+});
+</script>
