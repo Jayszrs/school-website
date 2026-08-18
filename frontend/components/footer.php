@@ -2,7 +2,7 @@
     <div class="container footer-grid">
         <div class="footer-col footer-brand">
             <div class="brand">
-                <img src="<?php echo SITE_URL; ?>/assets/images/logo.png" alt="Logo" class="brand-logo brand-logo-footer" onerror="this.style.display='none'">
+                <img src="<?php echo SITE_URL; ?>/frontend/assets/images/logo.png" alt="Logo" class="brand-logo brand-logo-footer" onerror="this.style.display='none'">
                 <span class="brand-name"><?php echo esc(SITE_NAME); ?></span>
             </div>
             <p><?php echo esc(SITE_TAGLINE); ?>. Sekolah Islam modern yang berkomitmen mencetak generasi cerdas, berakhlak, dan berdaya saing global.</p>

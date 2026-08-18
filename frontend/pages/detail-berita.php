@@ -1,5 +1,6 @@
 <?php
-require_once 'includes/config.php';
+require_once __DIR__ . '/../../backend/config/database.php';
+require_once __DIR__ . '/../../backend/helpers/functions.php';
 
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 
@@ -18,7 +19,7 @@ $stmt2->execute([$news['id']]);
 $other_news = $stmt2->fetchAll();
 
 $page_title = $news['title'];
-require_once 'includes/header.php';
+require_once __DIR__ . '/../components/header.php';
 ?>
 
 <section class="page-header">
@@ -66,4 +67,4 @@ require_once 'includes/header.php';
 </section>
 <?php endif; ?>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../components/footer.php'; ?>

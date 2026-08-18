@@ -1,7 +1,8 @@
 <?php
-require_once 'includes/config.php';
+require_once __DIR__ . '/../../backend/config/database.php';
+require_once __DIR__ . '/../../backend/helpers/functions.php';
 $page_title = 'Prestasi';
-require_once 'includes/header.php';
+require_once __DIR__ . '/../components/header.php';
 
 $achievements = [
     ['title' => 'Juara 1 Olimpiade Matematika', 'level' => 'Tingkat Nasional', 'year' => '2026', 'tag' => 'Nasional', 'color' => 'd4af37'],
@@ -41,4 +42,4 @@ $achievements = [
     </div>
 </section>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../components/footer.php'; ?>

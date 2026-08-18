@@ -1,31 +1,7 @@
 <?php
 /**
- * Konfigurasi Database & Pengaturan Umum Website Sekolah
- * File ini di-include di setiap halaman yang membutuhkan koneksi database.
+ * Pengaturan Umum Website dan Fungsi Pembantu (Helpers)
  */
-
-// ==== KONFIGURASI DATABASE (XAMPP default) ====
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'school_website');
-
-// ==== KONEKSI PDO ====
-try {
-    $pdo = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-        DB_USER,
-        DB_PASS,
-        [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
-        ]
-    );
-} catch (PDOException $e) {
-    // Jangan tampilkan detail error database ke user
-    die('Koneksi database gagal. Silakan periksa konfigurasi database Anda.');
-}
 
 // ==== PENGATURAN UMUM WEBSITE ====
 define('SITE_NAME', 'LPIT Thariq Bin Ziyad');
@@ -55,7 +31,6 @@ function tanggal_indo($tanggal) {
 }
 
 // Menu navigasi dengan dropdown support
-// String value = link biasa, Array value = dropdown menu
 $nav_menu = [
     'index.php'    => 'Home',
     'profil'       => [
@@ -80,5 +55,3 @@ $nav_menu = [
     'spmb.php'     => 'SPMB',
     '#karir'       => 'Karir',
 ];
-
-$current_page = basename($_SERVER['PHP_SELF']);

@@ -1,7 +1,8 @@
 <?php
-require_once 'includes/config.php';
+require_once __DIR__ . '/../../backend/config/database.php';
+require_once __DIR__ . '/../../backend/helpers/functions.php';
 $page_title = 'Program Unggulan';
-require_once 'includes/header.php';
+require_once __DIR__ . '/../components/header.php';
 
 $programs = [
     ['icon' => 'Q', 'title' => "Tahfidz Al-Qur'an", 'desc' => "Program hafalan Al-Qur'an dengan target dan metode yang disesuaikan setiap jenjang, dibimbing oleh guru tahfidz bersertifikat."],
@@ -40,4 +41,4 @@ $programs = [
     </div>
 </section>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../components/footer.php'; ?>

@@ -1,7 +1,8 @@
 <?php
-require_once 'includes/config.php';
+require_once __DIR__ . '/../../backend/config/database.php';
+require_once __DIR__ . '/../../backend/helpers/functions.php';
 $page_title = 'Tentang Kami';
-require_once 'includes/header.php';
+require_once __DIR__ . '/../components/header.php';
 ?>
 
 <section class="page-header">
@@ -73,4 +74,4 @@ require_once 'includes/header.php';
     </div>
 </section>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../components/footer.php'; ?>

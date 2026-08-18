@@ -1,7 +1,8 @@
 <?php
-require_once 'includes/config.php';
+require_once __DIR__ . '/../../backend/config/database.php';
+require_once __DIR__ . '/../../backend/helpers/functions.php';
 $page_title = 'Kegiatan Sekolah';
-require_once 'includes/header.php';
+require_once __DIR__ . '/../components/header.php';
 
 $activities = [
     ['title' => 'Pesantren Ramadhan', 'desc' => 'Rangkaian kegiatan keagamaan selama bulan Ramadhan untuk seluruh siswa.'],
@@ -40,4 +41,4 @@ $activities = [
     </div>
 </section>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../components/footer.php'; ?>

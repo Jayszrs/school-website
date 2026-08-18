@@ -107,6 +107,8 @@ h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; color: var(--primary-dark)
     justify-content: space-between;
     padding: 14px 5%;
     width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
 }
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand-logo { height: 75px; width: auto; object-fit: contain; }
