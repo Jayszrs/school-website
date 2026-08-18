@@ -28,15 +28,15 @@ try {
 }
 
 // ==== PENGATURAN UMUM WEBSITE ====
-define('SITE_NAME', 'SIT Nurul Hikmah');
-define('SITE_TAGLINE', 'Membangun Generasi Islami, Cerdas, dan Berkarakter');
+define('SITE_NAME', 'LPIT Thariq Bin Ziyad');
+define('SITE_TAGLINE', 'Lembaga Pendidikan Islam Terpadu — Membentuk Generasi Qurani, Cerdas, dan Berkarakter');
 define('SITE_URL', 'http://localhost/school-website');
 define('SITE_PHONE', '(021) 1234-5678');
 define('SITE_WHATSAPP', '6281234567890');
-define('SITE_EMAIL', 'info@nurulhikmah.sch.id');
+define('SITE_EMAIL', 'info@thariqbinziyad.sch.id');
 define('SITE_ADDRESS', 'Jl. Pendidikan Raya No. 45, Cikarang, Jawa Barat');
-define('SITE_INSTAGRAM', 'https://instagram.com/sitnurulhikmah');
-define('SITE_YOUTUBE', 'https://youtube.com/@sitnurulhikmah');
+define('SITE_INSTAGRAM', 'https://instagram.com/lpitthariqbinziyad');
+define('SITE_YOUTUBE', 'https://youtube.com/@lpitthariqbinziyad');
 
 // Helper untuk output aman (mencegah XSS)
 function esc($string) {
@@ -54,18 +54,31 @@ function tanggal_indo($tanggal) {
     return date('d', $timestamp) . ' ' . $bulan[(int)date('n', $timestamp)] . ' ' . date('Y', $timestamp);
 }
 
-// Menu navigasi (dipakai di header.php agar konsisten & mudah menandai halaman aktif)
+// Menu navigasi dengan dropdown support
+// String value = link biasa, Array value = dropdown menu
 $nav_menu = [
-    'index.php'    => 'Beranda',
-    'tentang.php'  => 'Tentang Kami',
-    'unit.php'     => 'Unit Sekolah',
-    'program.php'  => 'Program',
-    'prestasi.php' => 'Prestasi',
-    'kegiatan.php' => 'Kegiatan',
-    'galeri.php'   => 'Galeri',
-    'berita.php'   => 'Berita',
+    'index.php'    => 'Home',
+    'profil'       => [
+        'label' => 'Profil',
+        'children' => [
+            'tentang.php'  => 'Tentang Kami',
+            'unit.php'     => 'Unit Sekolah',
+            'program.php'  => 'Program',
+            'prestasi.php' => 'Prestasi',
+        ]
+    ],
+    'kontak.php'   => 'Lokasi Sekolah',
+    '#alquran'     => 'Al Quran',
+    'berita.php'   => 'News',
+    'brosur'       => [
+        'label' => 'Brosur',
+        'children' => [
+            'galeri.php'    => 'Galeri',
+            'kegiatan.php'  => 'Kegiatan',
+        ]
+    ],
     'spmb.php'     => 'SPMB',
-    'kontak.php'   => 'Kontak',
+    '#karir'       => 'Karir',
 ];
 
 $current_page = basename($_SERVER['PHP_SELF']);
