@@ -18,7 +18,7 @@ require_once __DIR__ . '/../components/header.php';
 <section class="hero">
     <div class="container hero-inner">
         <span class="hero-eyebrow">Penerimaan Siswa Baru Tahun Ajaran 2026/2027</span>
-        <h1>Lembaga Pendidikan <span>Islam Terpadu</span> Thariq Bin Ziyad</h1>
+        <h1>Lembaga Pendidikan <span>Islam Terpadu</span> <strong class="school-name">Thariq Bin Ziyad</strong></h1>
         <p>Membentuk generasi Qur'ani, cerdas, dan berkarakter dengan paduan kurikulum akademik modern dan nilai-nilai keislaman untuk menghadapi masa depan.</p>
         <div class="hero-actions">
             <a href="tentang.php" class="btn btn-outline-light">Tentang Kami</a>

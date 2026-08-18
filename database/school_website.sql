@@ -54,7 +54,37 @@ CREATE TABLE IF NOT EXISTS `spmb_registrations` (
     `email` VARCHAR(150) DEFAULT NULL,
     `level` VARCHAR(20) NOT NULL,
     `previous_school` VARCHAR(150) DEFAULT NULL,
+    `payment_status` ENUM('belum_bayar','sebagian','lunas') NOT NULL DEFAULT 'belum_bayar',
+    `payment_amount` DECIMAL(14,2) NOT NULL DEFAULT 0,
+    `payment_method` VARCHAR(50) DEFAULT NULL,
+    `payment_date` DATE DEFAULT NULL,
+    `payment_notes` TEXT DEFAULT NULL,
+    `payment_updated_by` INT DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- Tabel akun portal internal. Akun awal dibuat otomatis oleh backend/auth.php
+-- dengan password ter-hash saat portal pertama kali dibuka.
+CREATE TABLE IF NOT EXISTS `portal_users` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(120) NOT NULL,
+    `email` VARCHAR(190) NOT NULL UNIQUE,
+    `password` VARCHAR(255) NOT NULL,
+    `role` ENUM('admin','humas','kasir') NOT NULL,
+    `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+    `last_login_at` DATETIME DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `portal_activity_logs` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT DEFAULT NULL,
+    `action` VARCHAR(100) NOT NULL,
+    `description` VARCHAR(255) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_activity_user` (`user_id`),
+    CONSTRAINT `fk_activity_user` FOREIGN KEY (`user_id`) REFERENCES `portal_users` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
 -- ============================================================

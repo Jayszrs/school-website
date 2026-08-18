@@ -22,6 +22,16 @@ Akses melalui browser:
 http://localhost/school-website/
 ```
 
+## Portal Internal (CRM)
+
+Portal tidak ditampilkan pada navigasi website publik. Gunakan URL role berikut:
+
+- Admin: `http://localhost/school-website/portal/admin`
+- Humas: `http://localhost/school-website/portal/humas`
+- Kasir SPMB: `http://localhost/school-website/portal/kasir`
+
+Akun awal dibuat otomatis ketika salah satu halaman portal pertama kali dibuka. Admin dapat mengganti password, menambah akun, atau menonaktifkan akun melalui menu **Manajemen Pengguna**.
+
 ## 5. Konfigurasi (opsional)
 Semua pengaturan umum (nama sekolah, alamat, no WhatsApp, dsb) ada di:
 ```
