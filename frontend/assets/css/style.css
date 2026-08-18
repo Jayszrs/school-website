@@ -104,7 +104,8 @@ h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; color: var(--primary-dark)
 .header-inner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 80px;
     padding: 14px 5%;
     width: 100%;
     max-width: 1440px;
