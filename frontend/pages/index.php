@@ -144,12 +144,12 @@ require_once __DIR__ . '/../components/header.php';
 </section>
 
 <!-- STATISTIK -->
-<section class="stats-section">
-    <div class="container stats-grid">
-        <div class="stat-item"><strong>1000+</strong><span>Siswa</span></div>
-        <div class="stat-item"><strong>100+</strong><span>Guru</span></div>
-        <div class="stat-item"><strong>20+</strong><span>Program</span></div>
-        <div class="stat-item"><strong>50+</strong><span>Prestasi</span></div>
+<section class="section text-center" style="background: var(--primary-dark); color: white;">
+    <div class="container grid-4" id="statsSection">
+        <div><h2 style="color:var(--accent); font-size:3rem; margin-bottom:10px;"><span class="counter" data-target="1000">0</span>+</h2><p>Siswa</p></div>
+        <div><h2 style="color:var(--accent); font-size:3rem; margin-bottom:10px;"><span class="counter" data-target="100">0</span>+</h2><p>Guru</p></div>
+        <div><h2 style="color:var(--accent); font-size:3rem; margin-bottom:10px;"><span class="counter" data-target="20">0</span>+</h2><p>Program</p></div>
+        <div><h2 style="color:var(--accent); font-size:3rem; margin-bottom:10px;"><span class="counter" data-target="50">0</span>+</h2><p>Prestasi</p></div>
     </div>
 </section>
 
@@ -292,5 +292,41 @@ document.addEventListener("scroll", function() {
         let scrollPos = window.pageYOffset;
         hero.style.backgroundPositionY = (scrollPos * 0.4) + "px";
     }
+});
+
+// Counter Animation
+document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200;
+
+    const animateCounters = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 15);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+                observer.unobserve(counter);
+            }
+        });
+    };
+
+    const counterObserver = new IntersectionObserver(animateCounters, {
+        threshold: 0.5
+    });
+
+    counters.forEach(counter => {
+        counterObserver.observe(counter);
+    });
 });
 </script>
